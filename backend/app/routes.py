@@ -1,14 +1,17 @@
 from flask import Blueprint, jsonify
+from . import db
 
-# Create a Blueprint for API routes
 api_bp = Blueprint('api', __name__)
 
-# Root route to test if the API is running
 @api_bp.route('/', methods=['GET'])
 def root():
-    return jsonify({"message": "Welcome to the Flask API root!"})
+    try:
+        with db.engine.connect() as conn:
+            result = conn.execute("SELECT 1")
+            return jsonify({"message": "DB connected!", "result": result.scalar()})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-# Simple hello route
 @api_bp.route('/hello', methods=['GET'])
 def hello():
     return jsonify({"message": "Hello from Flask!"})
