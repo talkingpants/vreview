@@ -1,9 +1,10 @@
 import os
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
 from dotenv import load_dotenv
+
+from .config import Config
 
 # Load .env from backend/.env explicitly
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '../.env'))
@@ -12,16 +13,10 @@ load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '../.env'))
 db = SQLAlchemy()
 migrate = Migrate()
 
-def create_app():
-    app = Flask(__name__)
 
-    # Load config from .env
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SECRET_KEY'] = os.getenv("SECRET_KEY", "default-secret")
-
-    # Enable CORS for frontend integration
-    CORS(app)
+def create_app(config_class=Config):
+    app = Flask(__name__, static_folder="static")
+    app.config.from_object(config_class)
 
     # Initialize extensions
     db.init_app(app)
@@ -30,5 +25,9 @@ def create_app():
     # Register your API routes
     from .routes import api_bp
     app.register_blueprint(api_bp, url_prefix="/api/v1")
+
+    @app.route('/')
+    def index():
+        return send_from_directory(app.static_folder, 'index.html')
 
     return app

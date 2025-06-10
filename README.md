@@ -1,11 +1,11 @@
 # VReview
 
-**VReview** is a full-stack vulnerability review platform that integrates Microsoft Defender vulnerability data with a custom review and remediation workflow. It supports ticket creation in ServiceDesk Plus (on-prem).
+**VReview** is a small vulnerability review platform. It pulls data from Microsoft Defender and helps create remediation tickets in ServiceDesk Plus.
 
 ## 🧱 Tech Stack
 
-- **Frontend**: Angular
 - **Backend**: Flask (Python)
+- **Frontend**: Static HTML served by Flask
 - **Database**: PostgreSQL (via Docker)
 - **Containerisation**: Docker & Docker Compose
 
@@ -14,15 +14,14 @@
 - Retrieves software vulnerabilities from Microsoft Defender API
 - Allows selection of software for remediation
 - Creates tickets in ManageEngine ServiceDesk Plus (on-prem)
-- Clean Angular + Flask architecture with CORS support
+- Simple Flask architecture
 - Dockerised for consistent local and production deployment
 
 ## 📦 Project Structure
 
 ```
 vreview/
-├── backend/       # Flask backend
-├── frontend/      # Angular frontend
+├── backend/       # Flask app and static frontend
 ├── docker-compose.yml
 └── README.md
 ```
@@ -36,7 +35,7 @@ vreview/
    ```
 
 2. **Configure environment**
-   - Edit `/backend/.env` with your API keys and DB credentials
+   - Copy `/backend/.env.example` to `/backend/.env` and adjust values as needed
 
 3. **Run containers**
    ```bash
@@ -44,13 +43,11 @@ vreview/
    ```
 
 4. **Access the app**
-   - Frontend: [http://localhost:4200](http://localhost:4200)
-   - Backend API: [http://localhost:5000](http://localhost:5000)
+   - [http://localhost:5000](http://localhost:5000) serves the static frontend and API
 
 ## 💪 Status
 
-> Backend and frontend are scaffolded and connected.  
-> Defender API and ServiceDesk Plus integration in progress.
+> Core backend is scaffolded. Defender API and ServiceDesk Plus integration are in progress.
 
 ---
 
