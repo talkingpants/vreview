@@ -42,6 +42,14 @@ vreview/
    docker-compose up --build
    ```
 
+   Alternatively, to run the backend without Docker, install dependencies and
+   start the Flask server:
+
+   ```bash
+   pip install -r backend/requirements.txt
+   python backend/run.py
+   ```
+
 4. **Access the app**
    - [http://localhost:5000](http://localhost:5000) serves the static frontend and API
 
