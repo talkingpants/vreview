@@ -11,7 +11,7 @@
 
 ## 🚀 Features
 
-- Retrieves software vulnerabilities from Microsoft Defender API
+- Retrieves vulnerable software inventory from Microsoft Defender API
 - Allows selection of software for remediation
 - Creates tickets in ManageEngine ServiceDesk Plus (on-prem)
 - Simple Flask architecture
@@ -36,6 +36,8 @@ vreview/
 
 2. **Configure environment**
    - Copy `/backend/.env.example` to `/backend/.env` and adjust values as needed
+   - Set your Microsoft Defender credentials (`DEFENDER_TENANT_ID`,
+     `DEFENDER_CLIENT_ID`, `DEFENDER_CLIENT_SECRET`) for API access
 
 3. **Run containers**
    ```bash
@@ -55,7 +57,7 @@ vreview/
 
 ## 💪 Status
 
-> Core backend is scaffolded. Defender API and ServiceDesk Plus integration are in progress.
+Defender API integration is implemented for retrieving the vulnerable software inventory. ServiceDesk Plus integration is still in progress.
 
 ---
 

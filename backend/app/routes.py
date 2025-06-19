@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify
 from . import db
+from .defender import get_vulnerable_software
 
 api_bp = Blueprint('api', __name__)
 
@@ -15,3 +16,13 @@ def root():
 @api_bp.route('/hello', methods=['GET'])
 def hello():
     return jsonify({"message": "Hello from Flask!"})
+
+
+@api_bp.route('/vulnerable-software', methods=['GET'])
+def vulnerable_software():
+    """Return list of vulnerable software from Microsoft Defender."""
+    try:
+        data = get_vulnerable_software()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
