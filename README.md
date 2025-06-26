@@ -35,7 +35,7 @@ vreview/
    ```
 
 2. **Configure environment**
-   - Copy `/backend/.env.example` to `/backend/.env` and adjust values as needed
+   - Copy `./.env.example` to `./.env` and adjust values as needed
    - Set your Microsoft Defender credentials (`DEFENDER_TENANT_ID`,
      `DEFENDER_CLIENT_ID`, `DEFENDER_CLIENT_SECRET`) for API access
 
