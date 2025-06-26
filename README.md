@@ -41,7 +41,7 @@ vreview/
 
 3. **Run containers**
    ```bash
-   docker-compose up --build
+   docker compose up -d --build
    ```
 
    Alternatively, to run the backend without Docker, install dependencies and
