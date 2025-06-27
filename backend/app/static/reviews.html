@@ -54,6 +54,9 @@
                 `;
                 body.appendChild(row);
             });
+            if ($.fn.dataTable.isDataTable('#reviews-table')) {
+                $('#reviews-table').DataTable().destroy();
+            }
             $('#reviews-table').DataTable();
         }
         window.onload = loadReviews;

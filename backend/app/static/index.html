@@ -69,6 +69,9 @@
                 body.appendChild(row);
             });
 
+            if ($.fn.dataTable.isDataTable('#vuln-table')) {
+                $('#vuln-table').DataTable().destroy();
+            }
             $('#vuln-table').DataTable();
         }
 

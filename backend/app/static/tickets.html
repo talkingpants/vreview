@@ -54,6 +54,9 @@
                 `;
                 body.appendChild(row);
             });
+            if ($.fn.dataTable.isDataTable('#tickets-table')) {
+                $('#tickets-table').DataTable().destroy();
+            }
             $('#tickets-table').DataTable();
         }
         window.onload = loadTickets;
