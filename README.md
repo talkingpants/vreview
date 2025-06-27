@@ -35,7 +35,12 @@ vreview/
    ```
 
 2. **Configure environment**
-   - Copy `./.env.example` to `./.env` and adjust values as needed
+   - Copy `.env.example` to `.env` and adjust values as needed
+     ```bash
+     cp .env.example .env
+     ```
+   - The database credentials in `.env` are used by both the Flask app and the
+     Postgres service
    - Set your Microsoft Defender credentials (`DEFENDER_TENANT_ID`,
      `DEFENDER_CLIENT_ID`, `DEFENDER_CLIENT_SECRET`) for API access
 
