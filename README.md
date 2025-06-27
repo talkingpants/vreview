@@ -71,7 +71,8 @@ Defender API integration is implemented for retrieving the vulnerable software i
 
 ## 🧪 Running Tests
 
-Install dependencies and run the Pytest suite:
+Install dependencies and run the Pytest suite. You can run the commands below
+manually or execute `./setup_tests.sh` which installs the requirements for you:
 
 ```bash
 pip install -r backend/requirements.txt
