@@ -1,5 +1,9 @@
 import os
+import json
 import requests
+
+from . import db
+from .models import Vulnerability
 
 
 def get_access_token():
@@ -31,3 +35,41 @@ def get_vulnerable_software():
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     return response.json()
+
+
+def sync_vulnerabilities():
+    """Fetch vulnerable software from Defender API and store in the DB."""
+    data = get_vulnerable_software()
+    # Defender API typically returns a {"value": [...]} object
+    items = data.get("value") if isinstance(data, dict) else data
+    if items is None:
+        return 0
+
+    created = 0
+    for item in items:
+        defender_id = str(
+            item.get("id")
+            or item.get("cveId")
+            or item.get("softwareId")
+        )
+        if not defender_id:
+            continue
+
+        vulnerability = Vulnerability.query.filter_by(defender_id=defender_id).first()
+        if vulnerability is None:
+            vulnerability = Vulnerability(defender_id=defender_id)
+            created += 1
+
+        vulnerability.title = (
+            item.get("name")
+            or item.get("softwareName")
+            or item.get("title")
+            or defender_id
+        )
+        vulnerability.description = item.get("description") or json.dumps(item)
+        vulnerability.severity = item.get("severity") or item.get("highestSeverity")
+
+        db.session.add(vulnerability)
+
+    db.session.commit()
+    return created
