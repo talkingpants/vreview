@@ -109,3 +109,27 @@ def test_export_vulnerabilities_csv(client, app):
     assert 'id,defender_id,title,severity' in csv_text
     assert f"{vuln_id},v1,Test Vuln,High" in csv_text
 
+
+def test_verify_defender_success(client):
+    with patch('backend.app.routes.get_access_token', return_value='tok'):
+        resp = client.post('/api/v1/verify-defender', json={
+            'tenant_id': 't',
+            'client_id': 'c',
+            'client_secret': 's'
+        })
+    assert resp.status_code == 200
+    assert resp.get_json() == {'valid': True}
+
+
+def test_verify_defender_failure(client):
+    with patch('backend.app.routes.get_access_token', side_effect=RuntimeError('bad')):
+        resp = client.post('/api/v1/verify-defender', json={
+            'tenant_id': 't',
+            'client_id': 'c',
+            'client_secret': 's'
+        })
+    assert resp.status_code == 400
+    data = resp.get_json()
+    assert data['valid'] is False
+    assert 'error' in data
+

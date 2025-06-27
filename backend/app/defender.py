@@ -2,10 +2,11 @@ import os
 import requests
 
 
-def get_access_token():
-    tenant_id = os.getenv("DEFENDER_TENANT_ID")
-    client_id = os.getenv("DEFENDER_CLIENT_ID")
-    client_secret = os.getenv("DEFENDER_CLIENT_SECRET")
+def get_access_token(tenant_id=None, client_id=None, client_secret=None):
+    """Retrieve an API access token using provided or environment credentials."""
+    tenant_id = tenant_id or os.getenv("DEFENDER_TENANT_ID")
+    client_id = client_id or os.getenv("DEFENDER_CLIENT_ID")
+    client_secret = client_secret or os.getenv("DEFENDER_CLIENT_SECRET")
     if not all([tenant_id, client_id, client_secret]):
         raise RuntimeError("Defender API credentials are not fully configured")
 
@@ -31,3 +32,12 @@ def get_vulnerable_software():
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     return response.json()
+
+
+def verify_credentials(tenant_id, client_id, client_secret):
+    """Return True if a token can be acquired using the supplied credentials."""
+    try:
+        get_access_token(tenant_id, client_id, client_secret)
+        return True
+    except Exception:
+        return False

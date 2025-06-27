@@ -333,3 +333,17 @@ def save_settings():
     data = request.get_json() or {}
     # Settings persistence not implemented; just acknowledge receipt
     return jsonify({'saved': True, 'received': data})
+
+
+@api_bp.route('/verify-defender', methods=['POST'])
+def verify_defender():
+    """Verify Microsoft Defender credentials by attempting authentication."""
+    data = request.get_json() or {}
+    tenant = data.get('tenant_id')
+    client = data.get('client_id')
+    secret = data.get('client_secret')
+    try:
+        get_access_token(tenant, client, secret)
+        return jsonify({'valid': True})
+    except Exception as e:
+        return jsonify({'valid': False, 'error': str(e)}), 400
