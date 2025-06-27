@@ -23,3 +23,20 @@ def test_vulnerable_software_route(client):
         response = client.get('/api/v1/vulnerable-software')
     assert response.status_code == 200
     assert response.get_json() == sample
+
+
+def test_create_ticket_from_vulnerability(client, app):
+    with app.app_context():
+        vuln = Vulnerability(defender_id='v1', title='Test Vuln')
+        db.session.add(vuln)
+        db.session.commit()
+
+    resp = client.post(
+        '/api/v1/tickets/from-vulnerability',
+        json={'vulnerability_id': vuln.id}
+    )
+    assert resp.status_code == 201
+    data = resp.get_json()
+    assert data['ticket_number']
+    assert data['status'] == 'open'
+
