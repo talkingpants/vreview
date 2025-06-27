@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, request, Response
 import csv
 import io
+import logging
+from sqlalchemy.exc import OperationalError
 from . import db
 from .models import Vulnerability, Review, Ticket
 from .defender import get_vulnerable_software
@@ -13,7 +15,11 @@ def root():
         with db.engine.connect() as conn:
             result = conn.execute("SELECT 1")
             return jsonify({"message": "DB connected!", "result": result.scalar()})
+    except OperationalError as e:
+        logging.exception("Database connection failed")
+        return jsonify({"error": "Database unavailable"}), 503
     except Exception as e:
+        logging.exception("Unexpected error during DB check")
         return jsonify({"error": str(e)}), 500
 
 
