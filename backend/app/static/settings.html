@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VReview - Settings</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        nav { background: #333; padding: 10px; }
+        nav a { color: #fff; margin-right: 15px; text-decoration: none; }
+        .container { padding: 20px; }
+        label { display: block; margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="index.html">Vulnerabilities</a>
+        <a href="reviews.html">Reviews</a>
+        <a href="tickets.html">Tickets</a>
+        <a href="settings.html">Settings</a>
+    </nav>
+
+    <div class="container">
+        <h1>Settings</h1>
+        <form id="settings-form">
+            <label>Tenant ID <input type="text" id="tenant-id"></label>
+            <label>Client ID <input type="text" id="client-id"></label>
+            <label>Client Secret <input type="password" id="client-secret"></label>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('settings-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const payload = {
+                tenant_id: document.getElementById('tenant-id').value,
+                client_id: document.getElementById('client-id').value,
+                client_secret: document.getElementById('client-secret').value
+            };
+            await fetch('/api/v1/settings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            alert('Settings saved');
+        });
+    </script>
+</body>
+</html>

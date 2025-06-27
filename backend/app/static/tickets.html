@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VReview - Tickets</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        nav { background: #333; padding: 10px; }
+        nav a { color: #fff; margin-right: 15px; text-decoration: none; }
+        .container { padding: 20px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="index.html">Vulnerabilities</a>
+        <a href="reviews.html">Reviews</a>
+        <a href="tickets.html">Tickets</a>
+        <a href="settings.html">Settings</a>
+    </nav>
+
+    <div class="container">
+        <h1>Tickets</h1>
+        <table id="tickets-table" class="display">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Review ID</th>
+                    <th>Ticket Number</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+        async function loadTickets() {
+            const resp = await fetch('/api/v1/tickets');
+            const data = await resp.json();
+            const body = document.querySelector('#tickets-table tbody');
+            body.innerHTML = '';
+            data.forEach(t => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${t.id}</td>
+                    <td>${t.review_id}</td>
+                    <td>${t.ticket_number || ''}</td>
+                    <td>${t.status}</td>
+                `;
+                body.appendChild(row);
+            });
+            $('#tickets-table').DataTable();
+        }
+        window.onload = loadTickets;
+    </script>
+</body>
+</html>
