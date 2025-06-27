@@ -55,9 +55,29 @@ vreview/
 4. **Access the app**
    - [http://localhost:5000](http://localhost:5000) serves the static frontend and API
 
+## 📜 Database Migrations
+
+If you modify the models, generate migration scripts and apply them with Flask-Migrate:
+
+```bash
+# from the repository root
+FLASK_APP=backend/run.py flask db migrate -m "<message>"
+FLASK_APP=backend/run.py flask db upgrade
+```
+
 ## 💪 Status
 
 Defender API integration is implemented for retrieving the vulnerable software inventory. ServiceDesk Plus integration is still in progress.
+
+## 🧪 Running Tests
+
+Install dependencies and run the Pytest suite:
+
+```bash
+pip install -r backend/requirements.txt
+pip install pytest
+pytest
+```
 
 ---
 

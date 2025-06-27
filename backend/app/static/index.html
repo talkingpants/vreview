@@ -2,11 +2,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>VReview</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to VReview</h1>
-    <p>The frontend is served by Flask.</p>
+    <h1>Stored Vulnerabilities</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Select</th>
+                <th>Title</th>
+                <th>Severity</th>
+            </tr>
+        </thead>
+        <tbody id="vuln-table-body">
+            <!-- Content populated via JavaScript -->
+        </tbody>
+    </table>
+    <button id="create-ticket-btn">Create Tickets</button>
+
+    <script>
+        async function loadVulnerabilities() {
+            const resp = await fetch('/api/v1/vulnerabilities');
+            const data = await resp.json();
+            const body = document.getElementById('vuln-table-body');
+            body.innerHTML = '';
+            data.forEach(v => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><input type="checkbox" value="${v.id}"></td>
+                    <td>${v.title}</td>
+                    <td>${v.severity || ''}</td>
+                `;
+                body.appendChild(row);
+            });
+        }
+
+        async function createTickets() {
+            const checked = document.querySelectorAll('#vuln-table-body input[type=checkbox]:checked');
+            for (const c of checked) {
+                await fetch('/api/v1/tickets/from-vulnerability', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ vulnerability_id: c.value })
+                });
+            }
+            alert('Tickets created');
+            loadVulnerabilities();
+        }
+
+        document.getElementById('create-ticket-btn').addEventListener('click', createTickets);
+        window.onload = loadVulnerabilities;
+    </script>
 </body>
 </html>
