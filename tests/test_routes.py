@@ -40,3 +40,15 @@ def test_create_ticket_from_vulnerability(client, app):
     assert data['ticket_number']
     assert data['status'] == 'open'
 
+
+def test_dashboard_page_served(client):
+    resp = client.get('/dashboard.html')
+    assert resp.status_code == 200
+    assert b'VReview - Dashboard' in resp.data
+
+
+def test_reviews_page_served(client):
+    resp = client.get('/reviews.html')
+    assert resp.status_code == 200
+    assert b'VReview - Reviews' in resp.data
+

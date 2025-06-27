@@ -15,7 +15,9 @@ migrate = Migrate()
 
 
 def create_app(config_class=Config):
-    app = Flask(__name__, static_folder="static")
+    # Serve static files (HTML frontend) from the root URL so that
+    # paths like `/dashboard.html` work without an extra `/static` prefix.
+    app = Flask(__name__, static_folder="static", static_url_path="")
     app.config.from_object(config_class)
 
     # Initialize extensions
