@@ -1,0 +1,25 @@
+from unittest.mock import patch
+
+from backend.app import db
+from backend.app.models import Vulnerability
+
+
+def test_root_route(client):
+    response = client.get('/api/v1/')
+    data = response.get_json()
+    assert response.status_code == 200
+    assert 'message' in data
+
+
+def test_hello_route(client):
+    response = client.get('/api/v1/hello')
+    assert response.status_code == 200
+    assert response.get_json() == {"message": "Hello from Flask!"}
+
+
+def test_vulnerable_software_route(client):
+    sample = {"value": [{"id": "1", "name": "test"}]}
+    with patch('backend.app.routes.get_vulnerable_software', return_value=sample):
+        response = client.get('/api/v1/vulnerable-software')
+    assert response.status_code == 200
+    assert response.get_json() == sample

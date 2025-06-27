@@ -59,6 +59,16 @@ vreview/
 
 Defender API integration is implemented for retrieving the vulnerable software inventory. ServiceDesk Plus integration is still in progress.
 
+## 🧪 Running Tests
+
+Install dependencies and run the Pytest suite:
+
+```bash
+pip install -r backend/requirements.txt
+pip install pytest
+pytest
+```
+
 ---
 
 Feel free to fork, contribute, or raise issues!
