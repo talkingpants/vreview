@@ -1,4 +1,6 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, Response
+import csv
+import io
 from . import db
 from .models import Vulnerability, Review, Ticket
 from .defender import get_vulnerable_software
@@ -260,3 +262,74 @@ def create_ticket_from_vulnerability():
         "ticket_number": ticket.ticket_number,
         "status": ticket.status,
     }), 201
+
+
+# ---------------------------- Utility Actions ----------------------------
+
+@api_bp.route('/sync-defender', methods=['POST'])
+def sync_defender_route():
+    """Pull vulnerable software from Defender and store/update records."""
+    try:
+        data = get_vulnerable_software()
+        items = data.get('value', data)
+        created = 0
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            defender_id = item.get('id') or item.get('productId')
+            title = item.get('name') or item.get('title')
+            severity = item.get('severity')
+            if not defender_id or not title:
+                continue
+            vuln = Vulnerability.query.filter_by(defender_id=defender_id).first()
+            if vuln:
+                vuln.title = title
+                vuln.severity = severity
+            else:
+                vuln = Vulnerability(defender_id=defender_id, title=title, severity=severity)
+                db.session.add(vuln)
+                created += 1
+        db.session.commit()
+        return jsonify({'created': created})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+
+@api_bp.route('/vulnerabilities/clear', methods=['POST'])
+def clear_vulnerabilities():
+    """Delete all cached vulnerabilities."""
+    try:
+        count = Vulnerability.query.delete()
+        db.session.commit()
+        return jsonify({'cleared': count})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+
+@api_bp.route('/vulnerabilities/export', methods=['GET'])
+def export_vulnerabilities():
+    fmt = request.args.get('format', 'json')
+    vulns = Vulnerability.query.all()
+    if fmt == 'csv':
+        output = io.StringIO()
+        writer = csv.writer(output)
+        writer.writerow(['id', 'defender_id', 'title', 'severity'])
+        for v in vulns:
+            writer.writerow([v.id, v.defender_id, v.title, v.severity])
+        return Response(
+            output.getvalue(),
+            mimetype='text/csv',
+            headers={'Content-Disposition': 'attachment; filename=vulnerabilities.csv'}
+        )
+    else:
+        return jsonify([v.to_dict() for v in vulns])
+
+
+@api_bp.route('/settings', methods=['POST'])
+def save_settings():
+    """Placeholder endpoint to accept settings."""
+    data = request.get_json() or {}
+    # Settings persistence not implemented; just acknowledge receipt
+    return jsonify({'saved': True, 'received': data})
