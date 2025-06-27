@@ -1,4 +1,5 @@
 from unittest.mock import patch
+from sqlalchemy.exc import OperationalError
 
 from backend.app import db
 from backend.app.models import Vulnerability
@@ -9,6 +10,14 @@ def test_root_route(client):
     data = response.get_json()
     assert response.status_code == 200
     assert 'message' in data
+
+
+def test_root_route_db_unavailable(client):
+    err = OperationalError("SELECT 1", {}, Exception("boom"))
+    with patch('backend.app.routes.db.engine.connect', side_effect=err):
+        resp = client.get('/api/v1/')
+    assert resp.status_code == 503
+    assert resp.get_json() == {"error": "Database unavailable"}
 
 
 def test_index_page_served(client):
