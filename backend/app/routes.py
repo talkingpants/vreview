@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from . import db
 from .models import Vulnerability, Review, Ticket
-from .defender import get_vulnerable_software
+from .defender import get_vulnerable_software, sync_vulnerabilities
 
 api_bp = Blueprint('api', __name__)
 
@@ -27,6 +27,16 @@ def vulnerable_software():
     try:
         data = get_vulnerable_software()
         return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@api_bp.route('/sync-vulnerabilities', methods=['POST'])
+def sync_vulnerabilities_route():
+    """Fetch vulnerable software from Defender and store in DB."""
+    try:
+        created = sync_vulnerabilities()
+        return jsonify({"created": created})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
