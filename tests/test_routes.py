@@ -11,6 +11,12 @@ def test_root_route(client):
     assert 'message' in data
 
 
+def test_index_page_served(client):
+    resp = client.get('/')
+    assert resp.status_code == 200
+    assert b'Stored Vulnerabilities' in resp.data
+
+
 def test_hello_route(client):
     response = client.get('/api/v1/hello')
     assert response.status_code == 200

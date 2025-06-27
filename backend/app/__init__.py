@@ -6,8 +6,10 @@ from dotenv import load_dotenv
 
 from .config import Config
 
-# Load .env from backend/.env explicitly
-load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '../.env'))
+# Load .env file. Prefer repository root `.env` as documented in README
+# so running the app outside of Docker picks up local configuration.
+root_env = os.path.join(os.path.dirname(__file__), '../../.env')
+load_dotenv(dotenv_path=root_env)
 
 # Initialize extensions
 db = SQLAlchemy()
