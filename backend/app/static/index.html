@@ -51,7 +51,7 @@
         async function createTickets() {
             const checked = document.querySelectorAll('#vuln-table-body input[type=checkbox]:checked');
             for (const c of checked) {
-                await fetch('/api/v1/tickets', {
+                await fetch('/api/v1/tickets/from-vulnerability', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ vulnerability_id: c.value })
