@@ -1,0 +1,9 @@
+Control ID,Maturity Level,Control Description
+ML1-PA-01,ML1,Automated asset discovery used fortnightly for vulnerability scanning.
+ML2-PA-01,ML2,Automated asset discovery used weekly for vulnerability scanning.
+ML3-PA-01,ML3,Automated asset discovery used daily for vulnerability scanning.
+ML1-PA-02,ML1,Use of a vulnerability scanner with an up-to-date database.
+ML2-PA-02,ML2,Vulnerability scanner with updated definitions before each scan.
+ML3-PA-02,ML3,Continuous vulnerability scanning with real-time updates.
+ML0-PA-01,ML0,No automated asset discovery or infrequent scans.
+ML0-PA-02,ML0,Vulnerability scanner used sporadically or with outdated database.
