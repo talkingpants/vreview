@@ -1,0 +1,49 @@
+Control ID,Control Description
+ML1-PA-01,An automated method of asset discovery is used at least fortnightly to support the detection of assets for subsequent vulnerability scanning activities.
+ML1-PA-02,A vulnerability scanner with an up-to-date vulnerability database is used for vulnerability scanning activities.
+ML1-PA-03,A vulnerability scanner is used at least daily to identify missing patches or updates for vulnerabilities in online services.
+ML1-PA-04,"A vulnerability scanner is used at least weekly to identify missing patches or updates for vulnerabilities in office productivity suites, web browsers and their extensions, email clients, PDF software, and security products."
+ML1-PA-05,"Patches, updates or other vendor mitigations for vulnerabilities in online services are applied within 48 hours of release when vulnerabilities are assessed as critical by vendors or when working exploits exist."
+ML1-PA-06,"Patches, updates or other vendor mitigations for vulnerabilities in online services are applied within two weeks of release when vulnerabilities are assessed as non-critical by vendors and no working exploits exist."
+ML1-PA-07,"Patches, updates or other vendor mitigations for vulnerabilities in office productivity suites, web browsers and their extensions, email clients, PDF software, and security products are applied within two weeks of release."
+ML1-PA-08,Online services that are no longer supported by vendors are removed.
+ML1-PA-09,"Office productivity suites, web browsers and their extensions, email clients, PDF software, Adobe Flash Player, and security products that are no longer supported by vendors are removed."
+ML1-PO-01,An automated method of asset discovery is used at least fortnightly to support the detection of assets for subsequent vulnerability scanning activities.
+ML1-PO-02,A vulnerability scanner with an up-to-date vulnerability database is used for vulnerability scanning activities.
+ML1-PO-03,A vulnerability scanner is used at least daily to identify missing patches or updates for vulnerabilities in operating systems of internet-facing servers and internet-facing network devices.
+ML1-PO-04,"A vulnerability scanner is used at least fortnightly to identify missing patches or updates for vulnerabilities in operating systems of workstations, non-internet-facing servers and non-internet-facing network devices."
+ML1-PO-05,"Patches, updates or other vendor mitigations for vulnerabilities in operating systems of internet-facing servers and internet-facing network devices are applied within 48 hours of release when vulnerabilities are assessed as critical by vendors or when working exploits exist."
+ML1-PO-06,"Patches, updates or other vendor mitigations for vulnerabilities in operating systems of internet-facing servers and internet-facing network devices are applied within two weeks of release when vulnerabilities are assessed as non-critical by vendors and no working exploits exist."
+ML1-PO-07,"Patches, updates or other vendor mitigations for vulnerabilities in operating systems of workstations, non-internet-facing servers and non-internet-facing network devices are applied within one month of release."
+ML1-PO-08,Operating systems that are no longer supported by vendors are replaced.
+ML1-MF-01,"Multi-factor authentication is used to authenticate users to their organisation’s online services that process, store or communicate their organisation’s sensitive data."
+ML1-MF-02,"Multi-factor authentication is used to authenticate users to third-party online services that process, store or communicate their organisation’s sensitive data."
+ML1-MF-03,"Multi-factor authentication (where available) is used to authenticate users to third-party online services that process, store or communicate their organisation’s non-sensitive data."
+ML1-MF-04,"Multi-factor authentication is used to authenticate users to their organisation’s online customer services that process, store or communicate their organisation’s sensitive customer data."
+ML1-MF-05,"Multi-factor authentication is used to authenticate users to third-party online customer services that process, store or communicate their organisation’s sensitive customer data."
+ML1-MF-06,"Multi-factor authentication is used to authenticate customers to online customer services that process, store or communicate sensitive customer data."
+ML1-MF-07,"Multi-factor authentication uses either: something users have and something users know, or something users have that is unlocked by something users know or are."
+ML1-AC-01,Application control is implemented on workstations.
+ML1-AC-02,"Application control is applied to user profiles and temporary folders used by operating systems, web browsers and email clients."
+ML1-AC-03,"Application control restricts the execution of executables, software libraries, scripts, installers, compiled HTML, HTML applications and control panel applets to an organisation-approved set."
+ML1-RM-01,Microsoft Office macros are disabled for users that do not have a demonstrated business requirement.
+ML1-RM-02,Microsoft Office macros in files originating from the internet are blocked.
+ML1-RM-03,Microsoft Office macro antivirus scanning is enabled.
+ML1-RM-04,Microsoft Office macro security settings cannot be changed by users.
+ML1-AH-01,Internet Explorer 11 is disabled or removed.
+ML1-AH-02,Web browsers do not process Java from the internet.
+ML1-AH-03,Web browsers do not process web advertisements from the internet.
+ML1-AH-04,Web browser security settings cannot be changed by users.
+ML1-RA-01,"Requests for privileged access to systems, applications and data repositories are validated when first requested."
+ML1-RA-02,Privileged users are assigned a dedicated privileged account to be used solely for duties requiring privileged access.
+ML1-RA-03,"Privileged accounts (excluding those explicitly authorised to access online services) are prevented from accessing the internet, email and web services."
+ML1-RA-04,Privileged accounts explicitly authorised to access online services are strictly limited to only what is required for users and services to undertake their duties.
+ML1-RA-05,Privileged users use separate privileged and unprivileged operating environments.
+ML1-RA-06,Unprivileged accounts cannot logon to privileged operating environments.
+ML1-RA-07,Privileged accounts (excluding local administrator accounts) cannot logon to unprivileged operating environments.
+ML1-RB-01,"Backups of data, applications and settings are performed and retained in accordance with business criticality and business continuity requirements."
+ML1-RB-02,"Backups of data, applications and settings are synchronised to enable restoration to a common point in time."
+ML1-RB-03,"Backups of data, applications and settings are retained in a secure and resilient manner."
+ML1-RB-04,"Restoration of data, applications and settings from backups to a common point in time is tested as part of disaster recovery exercises."
+ML1-RB-05,Unprivileged accounts cannot access backups belonging to other accounts.
+ML1-RB-06,Unprivileged accounts are prevented from modifying and deleting backups.
